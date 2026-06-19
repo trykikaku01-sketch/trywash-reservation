@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test:apps-script": "node scripts/test-apps-script-webhook.mjs"
+  },
+  "devDependencies": {}
+}

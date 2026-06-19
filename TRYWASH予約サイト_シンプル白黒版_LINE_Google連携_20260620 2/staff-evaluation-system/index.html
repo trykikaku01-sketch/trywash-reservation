@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TRY WASH スタッフ評価システム</title>
+    <link rel="stylesheet" href="styles.css?v=20260615-line-ready" />
+  </head>
+  <body>
+    <main class="owner-shell">
+      <section class="access-panel" id="accessPanel" aria-label="代表者専用アクセス">
+        <div class="access-card">
+          <p class="eyebrow">TRY WASH Confidential</p>
+          <h1>スタッフ評価システム</h1>
+          <p class="access-copy">代表者・オーナー専用の独立システムです。</p>
+          <form id="accessForm" class="access-form">
+            <label>
+              利用者区分
+              <select id="accessRole" required>
+                <option value="代表者">代表者</option>
+                <option value="オーナー">オーナー</option>
+                <option value="一般スタッフ">一般スタッフ</option>
+                <option value="管理者権限スタッフ">管理者権限スタッフ</option>
+                <option value="店舗責任者">店舗責任者</option>
+              </select>
+            </label>
+            <label>
+              専用パスコード
+              <input id="accessCode" type="password" autocomplete="current-password" required />
+            </label>
+            <button class="primary-button" type="submit">入室</button>
+          </form>
+          <p class="access-message" id="accessMessage" role="status"></p>
+        </div>
+      </section>
+
+      <section class="app-shell" id="appShell" hidden>
+        <header class="app-header">
+          <div>
+            <p class="eyebrow">Owner Only</p>
+            <h1>TRY WASH スタッフ評価システム</h1>
+          </div>
+          <button class="text-button" id="lockButton" type="button">ロック</button>
+        </header>
+
+        <section class="metric-grid" id="metricGrid" aria-label="評価ダッシュボード"></section>
+
+        <section class="workspace">
+          <aside class="staff-panel" aria-label="スタッフ一覧">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Staff</p>
+                <h2>スタッフ</h2>
+              </div>
+              <button class="text-button" id="addStaffButton" type="button">追加</button>
+            </div>
+            <div class="staff-list" id="staffList"></div>
+          </aside>
+
+          <section class="detail-panel" aria-label="スタッフ詳細">
+            <form id="basicForm" class="section-card">
+              <div class="section-title">
+                <p class="eyebrow">Profile</p>
+                <h2>基本情報</h2>
+              </div>
+              <div class="form-grid">
+                <label>
+                  氏名
+                  <input id="staffName" required />
+                </label>
+                <label>
+                  入社日
+                  <input id="hireDate" type="date" />
+                </label>
+                <label>
+                  役職
+                  <input id="staffRole" placeholder="例：施工責任者" />
+                </label>
+                <label>
+                  雇用形態
+                  <select id="employmentType">
+                    <option value="正社員">正社員</option>
+                    <option value="アルバイト">アルバイト</option>
+                    <option value="業務委託">業務委託</option>
+                    <option value="役員">役員</option>
+                  </select>
+                </label>
+              </div>
+              <button class="primary-button" type="submit">基本情報を保存</button>
+            </form>
+
+            <section class="section-card">
+              <div class="section-title">
+                <p class="eyebrow">Performance</p>
+                <h2>売上・レバレート</h2>
+              </div>
+              <form id="performanceForm" class="form-grid performance-form">
+                <label>
+                  対象月
+                  <input id="recordMonth" type="month" required />
+                </label>
+                <label>
+                  担当件数
+                  <input id="caseCount" type="number" min="0" step="1" required />
+                </label>
+                <label>
+                  担当売上
+                  <input id="salesAmount" type="number" min="0" step="1" required />
+                </label>
+                <label>
+                  利益額
+                  <input id="profitAmount" type="number" min="0" step="1" />
+                </label>
+                <label>
+                  作業時間
+                  <input id="workHours" type="number" min="0" step="0.25" required />
+                </label>
+                <label>
+                  作業人数
+                  <input id="workPeople" type="number" min="0" step="0.25" required />
+                </label>
+                <button class="primary-button" type="submit">月次実績を追加</button>
+              </form>
+              <div class="record-list" id="performanceList"></div>
+            </section>
+
+            <section class="section-card">
+              <div class="section-title">
+                <p class="eyebrow">Evaluation</p>
+                <h2>評価</h2>
+              </div>
+              <div class="evaluation-grid" id="evaluationGrid"></div>
+            </section>
+
+            <section class="section-card">
+              <div class="section-title">
+                <p class="eyebrow">Interview</p>
+                <h2>面談記録</h2>
+              </div>
+              <form id="interviewForm" class="form-grid">
+                <label>
+                  面談日
+                  <input id="interviewDate" type="date" required />
+                </label>
+                <label class="wide">
+                  評価コメント
+                  <textarea id="evaluationComment" rows="3"></textarea>
+                </label>
+                <label class="wide">
+                  面談内容
+                  <textarea id="interviewContent" rows="3"></textarea>
+                </label>
+                <label>
+                  課題
+                  <textarea id="issueText" rows="3"></textarea>
+                </label>
+                <label>
+                  改善内容
+                  <textarea id="improvementText" rows="3"></textarea>
+                </label>
+                <label class="wide">
+                  目標設定
+                  <textarea id="goalText" rows="3"></textarea>
+                </label>
+                <button class="primary-button" type="submit">面談記録を追加</button>
+              </form>
+              <div class="record-list" id="interviewList"></div>
+            </section>
+
+            <section class="section-card">
+              <div class="section-title">
+                <p class="eyebrow">Export</p>
+                <h2>代表者用出力</h2>
+              </div>
+              <button class="text-button" id="exportButton" type="button">評価CSVを出力</button>
+            </section>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="../runtime-config.js?v=20260615-sites-ready"></script>
+    <script src="../shared-api.js?v=20260615-line-ready"></script>
+    <script src="app.js?v=20260615-line-ready"></script>
+  </body>
+</html>
