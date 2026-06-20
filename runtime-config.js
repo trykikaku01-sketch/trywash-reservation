@@ -4,7 +4,10 @@
   window.TRYWASH_CONFIG = {
     environment: isHostedHttp ? "production" : "local",
     storeId: "yokosuka",
-    apiBaseUrl: isHostedHttp ? "/api" : "",
+    apiBaseUrl: "",
+    googleAppsScriptWebhookUrl: "",
+    googleAppsScriptSecret: "",
+    googleAppsScriptOpaqueFallback: true,
     liffId: "2006165803-oWEnewYV",
     wordpressUrl: "https://try-wash.com",
     lineEnabled: isHostedHttp,
