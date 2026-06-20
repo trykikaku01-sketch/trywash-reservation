@@ -5,7 +5,7 @@
     environment: isHostedHttp ? "production" : "local",
     storeId: "yokosuka",
     apiBaseUrl: "",
-    googleAppsScriptWebhookUrl: "hhttps://script.google.com/macros/s/AKfycbyYNb2nGFr2lJxk0kXbSgZSVygNouCtfehQmRagQctviCn70ckvUX_DmbZ2jASwF34/exec",
+    googleAppsScriptWebhookUrl: "https://script.google.com/macros/s/AKfycbyYNb2nGFr2lJxk0kXbSgZSVygNouCtfehQmRagQctviCn70ckvUX_DmbZ2jASwF34/exec",
     googleAppsScriptSecret: "trywash_calendar_2026",
     googleAppsScriptOpaqueFallback: true,
     liffId: "2006165803-oWEnewYV",
