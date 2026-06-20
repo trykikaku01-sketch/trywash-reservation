@@ -13,25 +13,26 @@ function doPost(e) {
       });
     }
 
+    const reservationData = normalizeReservationPayload(payload);
     const calendar = CalendarApp.getCalendarById(CALENDAR_ID);
     if (!calendar) {
       throw new Error("Calendar not found: " + CALENDAR_ID);
     }
 
-    const start = new Date(payload.startDateTime);
-    const end = new Date(payload.endDateTime);
+    const start = new Date(reservationData.startDateTime);
+    const end = new Date(reservationData.endDateTime);
 
     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
       throw new Error("Invalid startDateTime or endDateTime");
     }
 
     const event = calendar.createEvent(
-      payload.title || makeTitle(payload),
+      makeTitle(reservationData),
       start,
       end,
       {
-        description: makeDescription(payload),
-        location: payload.storeName || "",
+        description: makeDescription(reservationData),
+        location: reservationData.storeName || "",
       },
     );
 
@@ -68,4 +69,33 @@ function jsonOutput(data) {
   return ContentService
     .createTextOutput(JSON.stringify(data))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function normalizeReservationPayload(payload) {
+  const reservation = payload.reservation || {};
+  const customer = payload.customer || {};
+  const vehicle = payload.vehicle || {};
+  const lineUser = payload.lineUser || {};
+  const startDateTime = payload.startDateTime || makeDateTime(reservation.startDate, reservation.startTime, "reservation.startDate/startTime");
+  const endDateTime = payload.endDateTime || makeDateTime(reservation.endDate, reservation.endTime, "reservation.endDate/endTime");
+
+  return {
+    customerName: payload.customerName || customer.name || "",
+    phone: payload.phone || customer.phone || "",
+    menu: payload.menu || reservation.menuName || "",
+    carModel: payload.carModel || vehicle.modelName || customer.carModel || "",
+    note: payload.note || customer.request || customer.arrivalNote || reservation.sameDayChangeNote || "",
+    lineUserId: payload.lineUserId || lineUser.lineUserId || "",
+    storeName: payload.storeName || reservation.storeName || "",
+    startDateTime: startDateTime,
+    endDateTime: endDateTime,
+  };
+}
+
+function makeDateTime(date, time, label) {
+  if (!date || !time) {
+    throw new Error((label || "reservation date/time") + " is required");
+  }
+
+  return date + "T" + String(time).slice(0, 5) + ":00+09:00";
 }
