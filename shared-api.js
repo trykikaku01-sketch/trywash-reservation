@@ -3,6 +3,9 @@
     environment: "local",
     storeId: "yokosuka",
     apiBaseUrl: "",
+    googleAppsScriptWebhookUrl: "",
+    googleAppsScriptSecret: "",
+    googleAppsScriptOpaqueFallback: true,
     liffId: "2006165803-oWEnewYV",
     wordpressUrl: "https://try-wash.com",
     lineEnabled: false,
@@ -14,7 +17,15 @@
   };
 
   function canUseRemoteApi() {
+    return Boolean(config.apiBaseUrl || config.googleAppsScriptWebhookUrl);
+  }
+
+  function canUseDatabaseApi() {
     return Boolean(config.apiBaseUrl);
+  }
+
+  function canUseGoogleAppsScript() {
+    return Boolean(config.googleAppsScriptWebhookUrl && config.googleAppsScriptSecret);
   }
 
   function makeUrl(path) {
@@ -24,7 +35,7 @@
   }
 
   async function request(path, options = {}) {
-    if (!canUseRemoteApi()) {
+    if (!canUseDatabaseApi()) {
       return { ok: false, skipped: true, reason: "apiBaseUrl is not configured" };
     }
 
@@ -140,11 +151,90 @@
   }
 
   async function saveReservation(booking, mode = "upsert") {
+    if (canUseGoogleAppsScript()) {
+      return postReservationToGoogleAppsScript(booking, mode);
+    }
+
     const method = mode === "create" ? "POST" : "PUT";
     const path = mode === "create" ? "/reservations" : `/reservations/${getReservationId(booking)}`;
     return request(path, {
       method,
       body: toReservationPayload(booking),
+    });
+  }
+
+  async function postReservationToGoogleAppsScript(booking, mode = "upsert") {
+    const payload = {
+      ...toReservationPayload(booking),
+      secret: config.googleAppsScriptSecret,
+      source: "trywash-static-site",
+      mode,
+    };
+
+    if (config.googleAppsScriptOpaqueFallback) {
+      await postOpaqueToAppsScript(payload);
+      console.info("Apps Scriptへ予約データを送信しました。Static Siteのため応答はブラウザ側で読まず、Googleカレンダー側で登録結果を確認します。");
+      return {
+        ok: true,
+        opaque: true,
+        reservation: {
+          ...booking,
+          googleCalendarProvider: "apps_script",
+          googleCalendarStatus: "submitted_opaque",
+          googleCalendarEventId: booking.googleCalendarEventId || "",
+          googleCalendarError: "",
+          googleCalendarSyncedAt: new Date().toISOString(),
+        },
+      };
+    }
+
+    const result = await postJsonToAppsScript(payload);
+    if (result?.ok === false) {
+      throw new Error(result.error || result.message || "Google Calendar registration failed");
+    }
+
+    return {
+      ok: true,
+      appsScript: result || {},
+      reservation: {
+        ...booking,
+        googleCalendarProvider: "apps_script",
+        googleCalendarStatus: "created",
+        googleCalendarEventId: result?.eventId || booking.googleCalendarEventId || "",
+        googleCalendarError: "",
+        googleCalendarSyncedAt: new Date().toISOString(),
+      },
+    };
+  }
+
+  async function postJsonToAppsScript(payload) {
+    const response = await fetch(config.googleAppsScriptWebhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+      body: JSON.stringify(payload),
+      redirect: "follow",
+    });
+
+    const text = await response.text();
+    const data = text ? JSON.parse(text) : {};
+
+    if (!response.ok) {
+      throw new Error(data?.error || data?.message || `Apps Script request failed: ${response.status}`);
+    }
+
+    return data;
+  }
+
+  async function postOpaqueToAppsScript(payload) {
+    await fetch(config.googleAppsScriptWebhookUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+      body: JSON.stringify(payload),
     });
   }
 
@@ -156,6 +246,8 @@
   }
 
   async function queueMessages(notices) {
+    if (!canUseDatabaseApi()) return { ok: false, skipped: true, reason: "apiBaseUrl is not configured" };
+
     const messages = (Array.isArray(notices) ? notices : [notices]).map(toMessagePayload);
     return request("/messages/queue", {
       method: "POST",
@@ -165,6 +257,7 @@
 
   async function upsertLineUser(profile) {
     if (!profile?.userId) return { ok: false, skipped: true };
+    if (!canUseDatabaseApi()) return { ok: false, skipped: true, reason: "apiBaseUrl is not configured" };
 
     return request("/line/users", {
       method: "POST",
@@ -180,6 +273,8 @@
   }
 
   async function saveStaffEvaluationState(state) {
+    if (!canUseDatabaseApi()) return { ok: false, skipped: true, reason: "apiBaseUrl is not configured" };
+
     return request("/staff/evaluations/snapshot", {
       method: "PUT",
       body: {
@@ -193,6 +288,8 @@
   window.TryWashApi = {
     config,
     canUseRemoteApi,
+    canUseDatabaseApi,
+    canUseGoogleAppsScript,
     request,
     listReservations,
     saveReservation,
