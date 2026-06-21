@@ -1,5 +1,5 @@
 {
-  "scripts": {
+  "scripts": {render-runtime-config.mjs
     "build": "node scripts/build.mjs",
     "test:apps-script": "node scripts/test-apps-script-webhook.mjs"
   },
