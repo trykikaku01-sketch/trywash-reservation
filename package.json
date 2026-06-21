@@ -1,6 +1,6 @@
 {
-  "scripts": {render-runtime-config.mjs
-    "build": "node scripts/build.mjs",
+  "scripts": {
+    "render:config": "node scripts/render-runtime-config.mjs",
     "test:apps-script": "node scripts/test-apps-script-webhook.mjs"
   },
   "devDependencies": {}
