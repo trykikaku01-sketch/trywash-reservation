@@ -1,95 +1,68 @@
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TRY WASH 横須賀店 | 洗車コーティング予約</title>
-    <link rel="stylesheet" href="styles.css?v=20260616-steps" />
-    <title>TRY WASH | 最新予約サイトへ移動</title>
+    <title>TRY WASH | 予約店舗選択</title>
+    <title>TRY WASH予約サイト | 店舗選択</title>
+    <link rel="stylesheet" href="styles.css?v=20260621-render-ready" />
   </head>
-  <body>
+  <body class="store-select-page">
     <header class="site-header">
-      <a class="brand" href="#" aria-label="TRY WASH 横須賀店 ホーム">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" role="img">
-            <path d="M5.1 13.5 6.7 8c.3-1 1.2-1.7 2.2-1.7h6.2c1 0 1.9.7 2.2 1.7l1.6 5.5" />
-            <path d="M4 14.8h16v3.5a1.4 1.4 0 0 1-1.4 1.4h-.8a1.4 1.4 0 0 1-1.4-1.4v-.2H7.6v.2a1.4 1.4 0 0 1-1.4 1.4h-.8A1.4 1.4 0 0 1 4 18.3v-3.5Z" />
-            <path d="M7.3 14.8h.1M16.6 14.8h.1M8 10.2h8" />
-          </svg>
-        </span>
+      <a class="brand" href="reserve.html" aria-label="TRY WASH 店舗選択">
+      <a class="brand" href="index.html" aria-label="TRY WASH 店舗選択">
+        <img class="brand-logo" src="assets/trywash-logo-white.jpg" alt="TRYWASH" />
         <span>
-          <strong>TRY WASH 横須賀店</strong>
+          <strong>予約店舗を選択</strong>
+          <strong>TRY WASH予約サイト</strong>
           <small>洗車・コーティング予約</small>
         </span>
       </a>
-      <nav class="header-actions" aria-label="予約導線">
-        <a href="https://liff.line.me/2006165803-oWEnewYV?calendar_salon_id=17130" class="phone-link">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.7 8.7 0 0 1-3.8-.9L3 21l1.8-5a8.5 8.5 0 1 1 16.2-4.5Z" />
-          </svg>
-          LINE予約
-        </a>
-      </nav>
-    </header>
-
-    <main>
-      <section class="hero" aria-labelledby="page-title">
-        <div class="hero-copy">
-          <p class="eyebrow">Yokosuka Detailing Studio</p>
-          <h1 id="page-title">TRY WASH 横須賀店</h1>
-        </div>
+      <section class="store-select-hero" aria-labelledby="store-select-title">
+        <img class="hero-logo" src="assets/trywash-logo-white.jpg" alt="TRYWASH" />
+        <p class="eyebrow">Reservation</p>
+        <h1 id="store-select-title">ご予約店舗をお選びください</h1>
+        <h1>TRY WASH予約サイト</h1>
+        <p id="store-select-title" class="store-select-lead">ご予約店舗をお選びください</p>
+        <p class="store-select-consult">コースの内容でご不明点がございましたら、LINEで施工者に直接ご相談できます。</p>
       </section>
 
-      <section class="booking-shell" aria-label="予約">
-        <aside class="menu-rail" id="menuStep" aria-label="予約条件">
-          <div class="vehicle-block" id="vehicleStep">
-            <div class="section-head">
-              <p class="eyebrow">Vehicle</p>
-              <h2>車両サイズ・車種</h2>
-            </div>
-            <div class="vehicle-guide-wrap" id="vehicleGuide"></div>
-            <div id="vehicleSizes" aria-label="車両サイズ選択"></div>
-          </div>
+      <section class="store-card-grid" aria-label="店舗選択">
+            <span>TRY WASH 横須賀店</span>
+            <strong>横須賀店で予約する</strong>
+            <b>メイン店舗・全メニュー対応</b>
+            <small>コースの内容でご不明点がございましたら、LINEで施工者に直接ご相談できます。</small>
+            <small>車種・メニュー・日時を選んで仮予約できます。</small>
+          </span>
+        </a>
+        <a class="store-card" href="yokohama.html">
+            <span>TRY WASH 横浜店</span>
+            <strong>横浜店の限定受付日を確認する</strong>
+            <b>限定日程・限定メニュー受付</b>
+            <small>既存のお客様や横浜方面のお客様向けに、限定日程・限定メニューで受付しております。内容によっては横須賀店をご案内する場合があります。</small>
+            <small>横浜方面のお客様向けに、対応可能な限定メニューを確認できます。</small>
+          </span>
+        </a>
+      </section>
+styles.css
+ファイル全体の内容を読み込めませんでした
+  letter-spacing: 0;
+}
 
-          <div class="section-head menu-section-head">
-            <p class="eyebrow">Menu</p>
-            <h2>メニュー</h2>
-          </div>
-          <div class="menu-list" id="menuList"></div>
-          <div class="menu-options" id="menuOptions"></div>
-          <div class="loaner-options" id="loanerOptions"></div>
-        </aside>
+.store-select-lead {
+  margin: 2px 0 0;
+  color: #111111;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 900;
+}
 
-        <section class="calendar-pane" id="calendarStep" aria-label="日時選択">
-          <div class="calendar-top">
-            <div>
-              <p class="eyebrow">Calendar</p>
-              <h2 id="weekTitle">予約カレンダー</h2>
-            </div>
-            <div class="week-controls">
-              <button class="icon-button" id="prevWeek" type="button" aria-label="前の週" title="前の週">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m15 18-6-6 6-6" />
-                </svg>
-              </button>
-              <button class="text-button" id="todayButton" type="button">今日へ移動</button>
-              <button class="text-button" id="currentWeekButton" type="button">今週表示</button>
-              <button class="text-button" id="monthViewButton" type="button">月表示</button>
-              <button class="icon-button" id="nextWeek" type="button" aria-label="次の週" title="次の週">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m9 18 6-6-6-6" />
-                </svg>
-              </button>
-            </div>
-          </div>
+.store-select-consult {
+  max-width: 42rem;
+  margin: 8px 0 0;
+  color: #333333;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.7;
+}
 
-          <div class="week-grid" id="weekGrid" role="list"></div>
-          <div class="availability-overview" id="availabilityOverview" aria-live="polite"></div>
-
-          <div class="slots-head">
-            <div>
-              <p class="eyebrow">Time</p>
-              <h3 id="selectedDateTitle">日時</h3>
-            </div>
-            <span class="hours-pill" id="hoursPill">-</span>
-          </div>
-          <div class="slot-grid" id="slotGrid"></div>
-        </section>
+.store-card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
