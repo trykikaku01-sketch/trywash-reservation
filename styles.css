@@ -1,183 +1,71 @@
-    padding: 24px;
-  }
-}
-
-/* Reservation page layout recovery */
-.reservation-page {
-  padding-bottom: 86px;
-  background: #ffffff;
-  color: #111111;
-}
-
-.reservation-page .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 30;
-  min-height: 76px;
-  padding: 8px clamp(14px, 3vw, 36px);
-  background: #ffffff;
-}
 
 .reservation-page .brand-logo {
   width: clamp(104px, 12vw, 150px);
+  max-width: 150px;
   max-height: 54px;
+  height: auto;
+  object-fit: contain;
 }
 
 .reservation-page .brand strong {
-  color: #111111;
-  font-size: clamp(0.96rem, 1.8vw, 1.12rem);
-}
-
-.reservation-page .brand small {
-  color: #555555;
-}
-
-.reservation-page .hero {
-  min-height: auto;
-  padding: 26px 16px 22px;
-  background: #ffffff;
-}
-
-.reservation-page .hero-copy {
-  display: grid;
-  justify-items: center;
-  gap: 10px;
-  max-width: 560px;
-}
 
 .reservation-page .hero-logo {
   width: min(220px, 54vw);
+  max-width: 220px;
   max-height: 156px;
+  height: auto;
   margin: 0;
+  object-fit: contain;
+}
+
+.reservation-page svg {
+  display: block;
+  flex: 0 0 auto;
+  max-width: 28px !important;
+  max-height: 28px !important;
+  overflow: visible;
+}
+
+.reservation-page .brand-mark svg,
+.reservation-page .phone-link svg,
+.reservation-page .header-actions svg,
+.reservation-page .line-reservation-link svg {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px;
+  min-height: 20px;
+  max-width: 20px !important;
+  max-height: 20px !important;
+}
+
+.reservation-page .icon-button svg {
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px;
+  min-height: 22px;
+  max-width: 22px !important;
+  max-height: 22px !important;
+}
+
+.reservation-page .line-reservation-link svg path {
+  fill: none !important;
+  stroke: currentColor !important;
 }
 
 .reservation-page .hero h1 {
   color: #111111;
   font-size: clamp(1.5rem, 3.4vw, 2.35rem);
-  line-height: 1.2;
-}
-
-.reservation-page .booking-shell {
-  display: grid;
-  grid-template-columns: minmax(340px, 410px) minmax(460px, 1fr) minmax(300px, 340px);
-  width: min(100% - 32px, 1440px);
-  max-width: 1440px;
-  margin: 0 auto 48px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: #ffffff;
-  box-shadow: 0 14px 34px rgba(17, 17, 17, 0.08);
-}
-
-.reservation-page .menu-rail,
-.reservation-page .calendar-pane,
-.reservation-page .summary-rail {
-  min-width: 0;
-  padding: 24px;
-  background: #ffffff;
-}
-
-.reservation-page .menu-rail {
-  border-right: 1px solid var(--line);
-}
-
-.reservation-page .calendar-pane {
-  border-right: 1px solid var(--line);
-}
-
-.reservation-page .summary-rail {
-  border-left: 0;
-}
-
-.reservation-page .week-grid,
-.reservation-page .slot-grid,
-.reservation-page .menu-list,
-.reservation-page #vehicleSizes {
-  min-width: 0;
-}
-
-.reservation-page .summary-box,
-.reservation-page .booking-form,
-.reservation-page .store-reservation-note {
-  width: 100%;
-}
-
-@media (max-width: 1180px) {
-  .reservation-page .booking-shell {
-    grid-template-columns: minmax(320px, 390px) minmax(0, 1fr);
-  }
-
-  .reservation-page .summary-rail {
-    display: grid;
-    grid-column: 1 / -1;
-    grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
-    gap: 24px;
-    border-top: 1px solid var(--line);
-    border-left: 0;
-  }
-
-  .reservation-page .summary-rail > .section-head,
-  .reservation-page .summary-rail > .summary-box {
-    grid-column: 1;
-  }
-
-  .reservation-page .booking-form {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-  }
-}
-
-@media (max-width: 860px) {
-  .reservation-page .site-header {
-    position: static;
-  }
-
-  .reservation-page .booking-shell,
-  .reservation-page .summary-rail {
-    display: block;
-  }
-
-  .reservation-page .menu-rail,
-  .reservation-page .calendar-pane,
-  .reservation-page .summary-rail {
-    border-right: 0;
-    border-left: 0;
-  }
-
-  .reservation-page .calendar-pane,
-  .reservation-page .summary-rail {
-    border-top: 1px solid var(--line);
-  }
-}
-
-@media (max-width: 620px) {
-  .reservation-page .site-header {
-    align-items: stretch;
-    flex-direction: column;
-  }
 
   .reservation-page .brand-logo {
     width: 116px;
+    max-width: 116px;
     max-height: 50px;
   }
 
-  .reservation-page .hero {
-    padding: 22px 14px 18px;
-  }
 
   .reservation-page .hero-logo {
     width: min(180px, 58vw);
+    max-width: 180px;
   }
 
   .reservation-page .booking-shell {
-    width: min(100% - 20px, 720px);
-    border-radius: 12px;
-  }
-
-  .reservation-page .menu-rail,
-  .reservation-page .calendar-pane,
-  .reservation-page .summary-rail {
-    padding: 20px 14px;
-  }
-}
